@@ -3,7 +3,7 @@
    xmlns:core="sap.ui.core">
    <Dialog
 		id="GravarUnidadeDialog"
-		title="Gravar Unidade"
+		title="{view>/titulo}"
 		class="sapUiSmallMargin">
    	
    		<VBox id="vBoxUnidade" class="sapUiSmallMargin">	

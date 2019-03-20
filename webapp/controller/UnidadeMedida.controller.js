@@ -18,6 +18,12 @@ sap.ui.define([
 		onIncluir: function(){
 			var oDialog = this._criarDialog();
 			var oModel = this.getOwnerComponent().getModel();
+			var oViewModel = this.getOwnerComponent().getModel("view");
+			
+			oViewModel.setData({
+				titulo: "Inserir Unidade de Medida",
+				msgSave: "Unidade de Medida inserida com sucesso!"
+			});
 			
 			oDialog.unbindElement();
 			oDialog.setEscapeHandler(function(oPromise){
@@ -42,9 +48,15 @@ sap.ui.define([
 			var oDialog = this._criarDialog();
 			var oTable = this.byId("tableUnidade");
 			var nIndex = oTable.getSelectedIndex();
+			var oViewModel = this.getOwnerComponent().getModel("view");
+			
+			oViewModel.setData({
+				titulo: "Editar Unidade de Medida",
+				msgSave: "Unidade de Medida alterada com sucesso!"
+			});
 			
 			if(nIndex === -1){
-				MessageBox.information("Selecione um módulo da tabela!");
+				MessageBox.information("Selecione uma unidade de medida da tabela!");
 				return;
 			}
 			
@@ -60,14 +72,14 @@ sap.ui.define([
 			var nIndex = oTable.getSelectedIndex();
 			
 			if(nIndex === -1){
-				MessageBox.information("Selecione um módulo da tabela!");
+				MessageBox.information("Selecione uma unidade de medida da tabela!");
 				return;
 			}
 			
-			MessageBox.confirm("Deseja realmente remover essa unidade de medida?", {
+			MessageBox.confirm("Deseja remover essa unidade de medida?", {
 				onClose: function(sResposta){
 					if(sResposta === "OK"){
-						MessageBox.information("Unidade de medida removida com sucesso!");
+						MessageBox.success("Unidade de medida removida com sucesso!");
 						that._remover(oTable, nIndex);
 					} 
 				}      
@@ -104,11 +116,12 @@ sap.ui.define([
 		onSaveDialog: function(){
 			var oView = this.getView();
 			var oModel = this.getOwnerComponent().getModel();
+			var oViewModel = this.getOwnerComponent().getModel("view");
 			
 			oModel.submitChanges({
 				success: function(){
 					oModel.refresh(true);
-					MessageBox.success("Unidade de medida gravada com sucesso!");
+					MessageBox.success(oViewModel.getData().msgSave);
 					oView.byId("GravarUnidadeDialog").close();
 					oView.byId("tableUnidade").clearSelection();
 				},
