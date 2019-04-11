@@ -11,8 +11,8 @@ sap.ui.define([
 		
 		onRefresh: function(){
 			var oModel = this.getOwnerComponent().getModel();
-			
 			oModel.refresh(true);
+			this.getView().byId("tableUnidade").clearSelection();
 		},
 		
 		onIncluir: function(){
@@ -56,7 +56,7 @@ sap.ui.define([
 			});
 			
 			if(nIndex === -1){
-				MessageBox.information("Selecione uma unidade de medida da tabela!");
+				MessageBox.warning("Selecione uma unidade de medida da tabela!");
 				return;
 			}
 			
@@ -72,7 +72,7 @@ sap.ui.define([
 			var nIndex = oTable.getSelectedIndex();
 			
 			if(nIndex === -1){
-				MessageBox.information("Selecione uma unidade de medida da tabela!");
+				MessageBox.warning("Selecione uma unidade de medida da tabela!");
 				return;
 			}
 			
@@ -94,9 +94,6 @@ sap.ui.define([
 				success: function(){
 					oModel.refresh(true);
 					oTable.clearSelection();
-				},
-				error: function(oError){
-					MessageBox.error(oError.responseText);
 				}
 			});
 		},
@@ -119,14 +116,14 @@ sap.ui.define([
 			var oViewModel = this.getOwnerComponent().getModel("view");
 			
 			oModel.submitChanges({
-				success: function(){
-					oModel.refresh(true);
-					MessageBox.success(oViewModel.getData().msgSave);
-					oView.byId("GravarUnidadeDialog").close();
-					oView.byId("tableUnidade").clearSelection();
-				},
-				error: function(oError){
-					MessageBox.error(oError.responseText);
+				success: function(oResponse){
+					var erro = oResponse.__batchResponses[0].response;
+					if(!erro){
+						oModel.refresh(true);
+						MessageBox.success(oViewModel.getData().msgSave);
+						oView.byId("GravarUnidadeDialog").close();
+						oView.byId("tableUnidade").clearSelection();	
+					}
 				}
 			});
 		},

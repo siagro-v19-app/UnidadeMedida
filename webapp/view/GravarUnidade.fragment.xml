@@ -4,7 +4,7 @@
    <Dialog
 		id="GravarUnidadeDialog"
 		title="{view>/titulo}"
-		class="sapUiSmallMargin">
+		class="sapUiSmallMargin sapUiSizeCompact">
    	
    		<VBox id="vBoxUnidade" class="sapUiSmallMargin">	
 			<Label text="Sigla:" labelFor="sigla"/>
